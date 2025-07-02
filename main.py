@@ -1,46 +1,16 @@
-def sort_on(dict):
-    return dict["num"]
-
-def convert_to_list(dicts):
-    dicts_list = []
-    for char in dicts:
-        new_dict = {'char': char, 'num': dicts[char]}
-        dicts_list.append(new_dict)
-    return dicts_list
-
-def print_report(dict):
-    dict = convert_to_list(dict)
-    dict.sort(reverse = True, key=sort_on)
-    for chars in dict:
-        if chars['char'].isalpha():
-            print(f"The '{chars['char']}' character was found {chars['num']} times")
-    print("---End report---")
-    
-def count_chars(text):
-    lowercased = text.lower()
-    chars = {}
-    for char in lowercased:
-        if char not in chars:
-            chars[char] = 1
-        else:
-            chars[char] += 1
-    return chars
-def word_count(text):
-    words = text.split()
-    return(len(words))
-
-def get_book_text(path):
-    with open(f'{path}', 'r', encoding="utf-8") as f:
-        file_contents = f.read()
-    return file_contents
+from stats import get_book_text, word_count, count_chars, print_report
+import sys
 
 def main():
-    text = get_book_text("books/frankenstein.txt")
-    print(text)
-    print("--- Begin report of books/frankenstein.txt ---")
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>\n")
+        sys.exit(1)
+    
+    text = get_book_text(sys.argv[1])
+    print(f"--- Begin report of {sys.argv[1]} ---")
     lowercased = text.lower()
     count = word_count(lowercased)
-    print(f"{count} words found in the document\n")
+    print(f"Found {count} total words\n")
     chars = count_chars(lowercased)
     print_report(chars)
 
