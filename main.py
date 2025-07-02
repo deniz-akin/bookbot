@@ -29,11 +29,16 @@ def word_count(text):
     words = text.split()
     return(len(words))
 
-def main():
-    with open('books/frankenstein.txt', 'r', encoding="utf-8") as f:
+def get_book_text(path):
+    with open(f'{path}', 'r', encoding="utf-8") as f:
         file_contents = f.read()
+    return file_contents
+
+def main():
+    text = get_book_text("books/frankenstein.txt")
+    print(text)
     print("--- Begin report of books/frankenstein.txt ---")
-    lowercased = file_contents.lower()
+    lowercased = text.lower()
     count = word_count(lowercased)
     print(f"{count} words found in the document\n")
     chars = count_chars(lowercased)
